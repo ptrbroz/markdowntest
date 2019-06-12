@@ -69,10 +69,8 @@ When viewed bit by bit, we get
 
 <table>
   <tr>
-    <th>a</th>
+    <th colspan="3">a</th>
     <th>d</th>
-    <th></th>
-    <th></th>
     <th></th>
   </tr>
   <tr>

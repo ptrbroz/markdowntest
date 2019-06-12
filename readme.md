@@ -19,10 +19,17 @@ This version of the generator runs on Altera DE0-Nano developement board (Cyclon
 
 Developed using Quartus II 64-bit Version 13.0.1.
 
+## Pin mapping
+
+TODO
+
 
 ## Communication protocol
 
 At the moment of writing, the communication is one-way. Each command sent via UART starts with a 3 byte opencode, followed by a number of data bytes and ends with a 3 byte closecode.
+
+In addition to the examples provided below, also see the [python communication scripts developed at AA4CC](py/).
+
 
 ### Reconfiguring channel phases and duty cycles
 
@@ -50,6 +57,8 @@ The device accepts bytes, not 9-bit integers via UART. Therefore, the first data
 
 When reconfiguring the channels, always send all 144 data bytes before sending the closecode. The device does not verify the number of bytes received; sending the closecode prematurely may lead to unexpected results due to the use of a shift register.
 
+[Jump to example](#Example-of-communication:-Channels-reconfiguration)
+
 ### Reconfiguring the output frequency
 
 ||Frequency comm codes|
@@ -59,9 +68,9 @@ Closecode | 255 255 243
 
 The change of output signal frequency is accomplished by reconfiguring the [ALTPLL (phase-locked loop)](https://www.intel.com/content/dam/www/programmable/us/en/pdfs/literature/ug/ug_altpll.pdf) entity used in the design.
 
-The PLL uses the onboard 50MHz clock to derive the clock used for driving the logic of channels. Let's call the frequency of this clock F_Logic. To enable the resolution of 1/360 of signal period, F_Logic is always 360 times higher than the frequency of the output signal (F_Out). 
+The PLL uses the onboard 50MHz clock to derive the clock used for driving the logic of channels. Let's call the frequency of this clock F_Logic. To accomplish the resolution of 1/360 of signal period, F_Logic is always 360 times higher than the frequency of the output signals (F_Out). 
 
-By reconfiguring the PLL, we will be changing it's internal counter variables M, N and C. The output frequency of the PLL, which is the aforementioned F_Logic, can be calculated as:
+By reconfiguring the PLL, it's internal counter variables M, N and C will change. The output frequency of the PLL, which is the aforementioned F_Logic, can be calculated as:
 
 F_Logic = (50*M)/(N*C) [MHz]
 
@@ -69,7 +78,7 @@ At the time of writing, the PLL is reconfigured by means of a 144-bit long scanc
 
 The order of bits follows (see below table for details).
 
-|Bits|todo|
+|Bits|Function|
 --- | ---
 0 to 1 | Reserved 
 2 to 9 | Loop Filter
@@ -92,9 +101,25 @@ The order of bits follows (see below table for details).
 108 to 125| Same as 54 to 71
 126 to 143| Same as 54 to 71
 
+The bits marked as Reserved must be set to 0.
 
+The bits marked as Loop Filter and Charge Pump influence the internal settings of the PLL loop filter and it's charge pump. At the time of writing, no documentation on how to set theese correctly has been found. However, using the default values found in [the sample scanchain](scanchainExample/36div125.mif) seems to work without any problems. In said scanchain, bits 2 to 9 are set to "00110000" and bits 15 to 17 to "001".
 
+The next 3 sets of 17 bits always correspond to counter X, where X is one of M,N,C.
 
+In case that the value of counter X is 1 (and therefore the counter has no effect on the output frequency), then set X counter bypass to 1 and set the remaining 16 bits to 0.
+
+When X is not 1, set X counter bypass to 0.
+
+When X is not 1 AND X is divisible by 2, set X counter Low Count and X counter High Count both to x/2. Additionally, set X counter Odd Division to 0.
+
+When X is not 1 and X is not divisible by 2, set X counter High Count to X/2 (rounded up), and set X counter Low Count to X/2 (rounded down). Additionally, set X counter Odd Division to 1.
+
+Unless X is 1, the sum of X counter Low Count and X counter High count must equal X.
+
+After generating the scanchain by the means described above, split it into bytes and send it in reverse order over UART (preceded by opencode). Upon receiving closecode, the device will reconfigure the PLL. This process is not instant, as the PLL needs some time to stabilize. 
+ 
+[Jump to example](#Example-of-communication:-PLL-reconfiguration)
 
 ### Example of communication: Channels reconfiguration
 
@@ -155,6 +180,32 @@ Therefore, to configure the channels to the desired settings, we need to send fo
 (replace XXX with 137 bytes of value 0)
 
 
+### Example of communication: PLL reconfiguration
 
+Let's assume that our goal is to generate an output of frequency F_Out = 20kHz.
 
+This means that the logic frequency F_Logic needs to be  7.2MHz. The equation
 
+F_Logic = 50*M/(N*C)
+
+can be satisfied for example by setting M = 18, N = 5, C = 25.
+
+We generate the scanchain in accordance to the instructions above:
+
+We set all counter bypass bits to 0.
+
+We set M counter Low and M counter High to 9 and M counter odd division to 0.
+
+We set N counter Low to 2, N counter High to 3 and N counter odd division to 1.
+
+We set C counter Low to 12, C counter High to 13 and C counter odd division to 1.
+
+The resulting scanchain in bits is:
+
+```
+00000110 00000000 00100000 00111000 00010000 00100100 00010010 00001101 10000110 00000011 01100001 10000000 11011000 01100000 00110110 00011000 00001101 10000110
+```
+
+We need to split it into bytes and send those in reverse order. We need to precede those bytes by opencode and end on closecode. The resulting stream of bytes in its entirety will be as follows:
+
+255 255 242 134 13 24 54 96 216 128 97 3 134 13 18 36 16 56 32 0 6 255 255 243

@@ -57,7 +57,7 @@ The device accepts bytes, not 9-bit integers via UART. Therefore, the first data
 
 When reconfiguring the channels, always send all 144 data bytes before sending the closecode. The device does not verify the number of bytes received; sending the closecode prematurely may lead to unexpected results due to the use of a shift register.
 
-[Jump to example](#Example-of-communication:-Channels-reconfiguration)
+[Jump to example](###Example-of-communication:-Channels-reconfiguration)
 
 ### Reconfiguring the output frequency
 
@@ -119,7 +119,7 @@ Unless X is 1, the sum of X counter Low Count and X counter High count must equa
 
 After generating the scanchain by the means described above, split it into bytes and send it in reverse order over UART (preceded by opencode). Upon receiving closecode, the device will reconfigure the PLL. This process is not instant, as the PLL needs some time to stabilize. 
  
-[Jump to example](#Example-of-communication:-PLL-reconfiguration)
+[Jump to example](###Example-of-communication:-PLL-reconfiguration)
 
 ### Example of communication: Channels reconfiguration
 

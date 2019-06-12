@@ -20,7 +20,7 @@ At the moment of writing, the communication is one-way. Each command sent via UA
 
 ### Reconfiguring channel phases and duty cycles
 
-|Phase & Duty comm codes|
+||Phase & Duty comm codes|
 --- | ---
 Opencode | 255 255 240
 Closecode | 255 255 241
@@ -73,22 +73,22 @@ When viewed bit by bit, we get
   </tr>
   <tr>
     <th colspan ="2"></th>
-    <th colspan="9">45</th>
+    <th bgcolor="#000000" colspan="9">45</th>
     <th colspan="9">270</th>
-    <th colspan="9">0</th>
+    <th bgcolor="#000000" colspan="9">0</th>
     <th colspan="9">180</th>
-    <th colspan="9">90</th>
+    <th bgcolor="#000000" colspan="9">90</th>
     <th colspan="9">180</th>
   </tr>
   <tr>
     <td>0</td> <td>0</td> <td>0</td> <td>0</td> <td>0</td> <td>1</td> <td>0</td> <td>1</td> <td>1</td> <td>0</td> <td>1</td> <td>1</td> <td>0</td> <td>0</td> <td>0</td> <td>0</td> <td>1</td> <td>1</td> <td>1</td> <td>0</td> <td>0</td> <td>0</td> <td>0</td> <td>0</td> <td>0</td> <td>0</td> <td>0</td> <td>0</td> <td>0</td> <td>0</td> <td>1</td> <td>0</td> <td>1</td> <td>1</td> <td>0</td> <td>1</td> <td>0</td> <td>0</td> <td>0</td> <td>0</td> <td>1</td> <td>0</td> <td>1</td> <td>1</td> <td>0</td> <td>1</td> <td>0</td> <td>0</td> <td>1</td> <td>0</td> <td>1</td> <td>1</td> <td>0</td> <td>1</td> <td>0</td> <td>0</td>
   <tr>
     <th colspan="8">5</th>
-    <th colspan="8">176</th>
+    <th bgcolor="#000000" colspan="8">176</th>
     <th colspan="8">224</th>
-    <th colspan="8">2</th>
+    <th bgcolor="#000000" colspan="8">2</th>
     <th colspan="8">208</th>
-    <th colspan="8">180</th>
+    <th bgcolor="#000000" colspan="8">180</th>
     <th colspan="8">180</th>
   </tr>
   <tr>

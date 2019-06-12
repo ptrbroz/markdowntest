@@ -69,19 +69,26 @@ When viewed bit by bit, we get
 
 <table>
   <tr>
-    <th colspan="3">a</th>
-    <th>d</th>
-    <th></th>
+    <th colspan ="2"></th>
+    <th colspan="9">2nd phase = 45</th>
+    <th colspan="9">2nd duty = 270</th>
+    <th colspan="9">1st phase = 0</th>
+    <th colspan="9">1st duty = 180</th>
+    <th colspan="9">0th phase = 90</th>
+    <th colspan="9">0th duty = 180</th>
   </tr>
   <tr>
-    <td>b</td>
-    <td>c</td>
-    <td></td>
-    <td></td>
-    <td></td>
+    <td>0</td> <td>0</td> <td>0</td> <td>0</td> <td>0</td> <td>0</td> <td>0</td> <td>0</td> <td>0</td> <td>0</td> <td>0</td> <td>1</td> <td>0</td> <td>0</td> <td>0</td> <td>0</td> <td>1</td> <td>1</td> <td>1</td> <td>0</td> <td>0</td> <td>0</td> <td>0</td> <td>1</td> <td>0</td> <td>1</td> <td>1</td> <td>0</td> <td>1</td> <td>0</td> <td>1</td> <td>0</td> <td>1</td> <td>1</td> <td>0</td> <td>1</td> <td>0</td> <td>0</td> <td>0</td> <td>0</td> <td>1</td> <td>0</td> <td>1</td> <td>1</td> <td>0</td> <td>1</td> <td>0</td> <td>0</td> <td>1</td> <td>0</td> <td>1</td> <td>1</td> <td>0</td> <td>1</td> <td>0</td> <td>0</td> </tr>
+  <tr>
+    <th colspan="8">6th byte = 0</th>
+    <th colspan="8">5th byte = 16</th>
+    <th colspan="8">4th byte = 225</th>
+    <th colspan="8">3rd byte = 106</th>
+    <th colspan="8">2nd byte = 208</th>
+    <th colspan="8">1st byte = 180</th>
+    <th colspan="8">0th byte = 180</th>
   </tr>
 </table>
-
 
 
 

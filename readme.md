@@ -83,12 +83,10 @@ The order of bits follows (see below table for details).
 37 to 44| M counter High Count
 45| M counter Odd division
 46 to 53|M counter Low Count
-
 54| C counter Bypass
 55 to 62| C counter High Count
 63| C counter odd Division
 64 to 71| C counter Low Count
-
 72 to 89|   Same as 54 to 71
 90 to 107|  Same as 54 to 71
 108 to 125| Same as 54 to 71
